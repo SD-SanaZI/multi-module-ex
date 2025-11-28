@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="11">
+      <module name="Em.data" target="21" />
+      <module name="Em.navigation" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Em.data.main" options="-proc:none" />
+      <module name="Em.data.test" options="-proc:none" />
+      <module name="Em.feature.login.data" options="-proc:none" />
+      <module name="Em.feature.login.data.main" options="-proc:none" />
+      <module name="Em.feature.login.data.test" options="-proc:none" />
+    </option>
+  </component>
+</project>

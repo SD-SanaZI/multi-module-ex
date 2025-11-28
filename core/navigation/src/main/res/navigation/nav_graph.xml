@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/inputFragment">
+
+    <fragment
+        android:id="@+id/inputFragment"
+        android:name="com.sanazi.login.presentation.LoginFragment"
+        android:label="InputFragment">
+        <deepLink
+            app:uri="android-app://com.sanazi/inputFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barFragment"
+        android:name="com.sanazi.pageWithBar.presentation.BarFragment"
+        android:label="BarFragment">
+        <deepLink
+            app:uri="android-app://com.sanazi/barFragment" />
+    </fragment>
+</navigation>
+

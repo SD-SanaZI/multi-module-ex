@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bar_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.sanazi.main.MainFragment"
+        android:label="MainFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.sanazi.favorite.FavoriteFragment"
+        android:label="FavoriteFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/accFragment"
+        android:name="com.sanazi.account.AccFragment"
+        android:label="AccFragment">
+    </fragment>
+</navigation>

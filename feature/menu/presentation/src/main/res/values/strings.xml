@@ -1,0 +1,18 @@
+<resources>
+<!--    <string name="app_name">EM_test</string>-->
+<!--    <string name="input">Вход</string>-->
+<!--    <string name="email">Email</string>-->
+<!--    <string name="email_hint">example@gmail.com</string>-->
+<!--    <string name="password">Пароль</string>-->
+<!--    <string name="password_hint">Введите пароль</string>-->
+<!--    <string name="no_acc">Нету аккаунта?</string>-->
+<!--    <string name="registration">Регитрация</string>-->
+<!--    <string name="forgot_pass">Забыл пароль</string>-->
+<!--    <string name="search_hint">Search courses...</string>-->
+<!--    <string name="sort">По дате добавления</string>-->
+<!--    <string name="moreDetails">Подробнее</string>-->
+    <string name="main">Главная</string>
+    <string name="favorite">Избранное</string>
+    <string name="acc">Аккаунт</string>
+<!--    <string name="price">%s ₽</string>-->
+</resources>
