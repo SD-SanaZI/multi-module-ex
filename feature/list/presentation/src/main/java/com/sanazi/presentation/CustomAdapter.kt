@@ -8,30 +8,18 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.sanazi.list.domain.Course
-import com.sanazi.list.domain.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class CustomAdapterHelper(private val repo: UserRepository){
-    val dataSet = mutableListOf<Course>()
+interface CustomAdapterManager{
+    val dataSet: List<Course>
 
-    suspend fun onFavoriteClick(position: Int){
-        withContext(Dispatchers.IO) {
-            repo.setFavorite(dataSet[position].id, !dataSet[position].hasLike)
-        }
-        val index = dataSet.indexOfFirst { it.id == dataSet[position].id }
-        if (index != -1){
-            val course = dataSet[index]
-            dataSet.removeAt(index)
-            dataSet.add(index, course.copy(hasLike = !course.hasLike))
-        }
-    }
+    suspend fun onFavoriteClick(position: Int)
 }
 
 class CustomAdapter(
-    val helper: CustomAdapterHelper
+    val manager: CustomAdapterManager
     ) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
@@ -52,15 +40,15 @@ class CustomAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.offerRate.text = helper.dataSet[position].rate
-        viewHolder.offerDate.text = helper.dataSet[position].startDate
-        viewHolder.offerTitle.text = helper.dataSet[position].title
-        viewHolder.offerText.text = helper.dataSet[position].text
-        viewHolder.offerPrise.text = viewHolder.itemView.resources.getString(R.string.price, helper.dataSet[position].price)
-        viewHolder.favorite.setImageResource(favoriteDrawable(helper.dataSet[position].hasLike))
+        viewHolder.offerRate.text = manager.dataSet[position].rate
+        viewHolder.offerDate.text = manager.dataSet[position].startDate
+        viewHolder.offerTitle.text = manager.dataSet[position].title
+        viewHolder.offerText.text = manager.dataSet[position].text
+        viewHolder.offerPrise.text = viewHolder.itemView.resources.getString(R.string.price, manager.dataSet[position].price)
+        viewHolder.favorite.setImageResource(favoriteDrawable(manager.dataSet[position].hasLike))
         viewHolder.favorite.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-                helper.onFavoriteClick(position)
+                manager.onFavoriteClick(position)
                 notifyItemChanged(position)
             }
         }
@@ -71,5 +59,5 @@ class CustomAdapter(
         return if (hasLike) R.drawable.fill_favorite_icon else com.sanazi.common_ui.R.drawable.favorite_icon
     }
 
-    override fun getItemCount() = helper.dataSet.size
+    override fun getItemCount() = manager.dataSet.size
 }

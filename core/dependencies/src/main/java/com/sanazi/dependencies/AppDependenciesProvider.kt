@@ -1,3 +1,3 @@
 package com.sanazi.dependencies
 
-interface AppDependenciesProvider: UserRepositoryProvider, InputCheckerProvider
+interface AppDependenciesProvider: CoursesManagerProvider, InputCheckerProvider

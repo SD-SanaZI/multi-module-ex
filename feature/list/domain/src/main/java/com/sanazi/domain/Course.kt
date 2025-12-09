@@ -1,9 +1,5 @@
 package com.sanazi.list.domain
 
-data class Courses(
-    val courses: List<Course>,
-)
-
 data class Course(
     val id: Int,
     val title: String,

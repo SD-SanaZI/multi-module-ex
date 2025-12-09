@@ -1,13 +1,13 @@
 package com.sanazi.list.data.di
 
 import android.content.Context
-import com.sanazi.dependencies.UserRepositoryProvider
+import com.sanazi.dependencies.CoursesManagerProvider
 import com.sanazi.list.data.DataModule
 import dagger.BindsInstance
 import dagger.Component
 
 @Component(modules = [DataModule::class])
-interface DataComponent: UserRepositoryProvider {
+interface DataComponent: CoursesManagerProvider {
 
     companion object{
         fun create(context: Context): DataComponent{

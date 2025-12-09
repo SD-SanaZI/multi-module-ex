@@ -3,17 +3,17 @@ package com.sanazi.list.data
 import com.sanazi.list.data.database.LikeState
 import com.sanazi.list.data.database.UserLocalDataSource
 import com.sanazi.list.data.net.UserRemoteDataSource
-import com.sanazi.list.domain.UserRepository
+import com.sanazi.list.domain.CoursesRepository
 import com.sanazi.list.domain.Course
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+class CoursesRepositoryImpl @Inject constructor(
     private val localDataSource: UserLocalDataSource,
     private val remoteDataSource: UserRemoteDataSource
-) : UserRepository {
-    override suspend fun update(): List<Course> {
+) : CoursesRepository {
+    override suspend fun getAllCourses(): List<Course> {
         return withContext(Dispatchers.IO) {
             val netCourses = remoteDataSource.getCourses()
             val newCourses = netCourses.map { course ->
