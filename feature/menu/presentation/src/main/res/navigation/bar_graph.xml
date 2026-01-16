@@ -16,7 +16,21 @@
     </fragment>
     <fragment
         android:id="@+id/accFragment"
-        android:name="com.sanazi.account.AccFragment"
+        android:name="com.sanazi.account.AccountFragment"
         android:label="AccFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.sanazi.settings.SettingsFragment"
+        android:label="SettingsFragment">
+        <deepLink
+            app:uri="android-app://com.sanazi/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/supportFragment"
+        android:name="com.sanazi.support.SupportFragment"
+        android:label="SupportFragment">
+        <deepLink
+            app:uri="android-app://com.sanazi/supportFragment" />
     </fragment>
 </navigation>

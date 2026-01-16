@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11">
       <module name="Em.data" target="21" />
+      <module name="Em.feature.mylibrary" target="21" />
       <module name="Em.navigation" target="21" />
       <module name="Em.presentation" target="21" />
     </bytecodeTargetLevel>

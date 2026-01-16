@@ -32,6 +32,10 @@
             <option value="$PROJECT_DIR$/feature/menu/presentation" />
             <option value="$PROJECT_DIR$/feature/pageWithBar" />
             <option value="$PROJECT_DIR$/feature/pageWithBar/presentation" />
+            <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/settings/presentation" />
+            <option value="$PROJECT_DIR$/feature/support" />
+            <option value="$PROJECT_DIR$/feature/support/presentation" />
           </set>
         </option>
       </GradleProjectSettings>

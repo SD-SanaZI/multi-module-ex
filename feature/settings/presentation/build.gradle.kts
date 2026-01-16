@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sanazi.menu.presentation"
+    namespace = "com.sanazi.settings"
     compileSdk {
         version = release(36)
     }
@@ -35,18 +35,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common_UI"))
-    implementation(project(":feature:account"))
-    implementation(project(":feature:main"))
-    implementation(project(":feature:favorite"))
-    implementation(project(":feature:settings:presentation"))
-    implementation(project(":feature:support:presentation"))
-
-
-    implementation("androidx.fragment:fragment-ktx:1.8.9")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
