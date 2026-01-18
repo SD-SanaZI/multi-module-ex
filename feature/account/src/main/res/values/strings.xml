@@ -5,4 +5,6 @@
     <string name="settings">Настройки</string>
     <string name="exit">Выйти из аккаунта</string>
     <string name="your_courses">Ваши курсы</string>
+    <string name="percent">%d%%</string>
+    <string name="total_lessons">/%d уроков</string>
 </resources>

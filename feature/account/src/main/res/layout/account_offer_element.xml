@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="204dp"
+    android:background="@drawable/offer_corner_shape"
+    android:layout_marginVertical="8dp"
+    android:backgroundTint="@color/darkGray">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="114dp"
+        app:cardCornerRadius="16dp"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/OfferImageStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/offer_image_mock" />
+
+    <View
+        android:id="@+id/favoriteContainer"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="@id/image"
+        app:layout_constraintEnd_toEndOf="@id/image"
+        android:background="@drawable/corner_shape"
+        android:backgroundTint="@color/glass"
+        />
+    
+    <ImageView
+        android:id="@+id/favorite"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:srcCompat="@drawable/favorite_icon"
+        app:layout_constraintTop_toTopOf="@id/favoriteContainer"
+        app:layout_constraintStart_toStartOf="@id/favoriteContainer"
+        app:layout_constraintEnd_toEndOf="@id/favoriteContainer"
+        app:layout_constraintBottom_toBottomOf="@id/favoriteContainer"
+        />
+
+    <LinearLayout
+        android:id="@+id/starContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_margin="8dp"
+        android:paddingVertical="2dp"
+        android:paddingHorizontal="6dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/corner_shape"
+        android:backgroundTint="@color/glass"
+        app:layout_constraintStart_toStartOf="@id/image"
+        app:layout_constraintBottom_toBottomOf="@id/image">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            app:srcCompat="@drawable/star_icon" />
+
+        <TextView
+            android:id="@+id/offerRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="4.9"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/offerDate"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:paddingHorizontal="6dp"
+        android:text="22 Мая 2024"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:background="@drawable/corner_shape"
+        android:backgroundTint="@color/glass"
+        app:layout_constraintStart_toEndOf="@id/starContainer"
+        app:layout_constraintBottom_toBottomOf="@id/starContainer"
+        />
+
+    <TextView
+        android:id="@+id/offerTitle"
+        android:layout_width="0dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="Java-разработчик с нуля"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image" />
+
+    <TextView
+        android:id="@+id/progressPercent"
+        android:layout_width="0dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="50%"
+        android:textColor="@color/green"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/progressStart" />
+
+    <TextView
+        android:id="@+id/lessensDone"
+        android:layout_width="0dp"
+        android:layout_height="14dp"
+        android:text="22"
+        android:textColor="@color/green"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/lessensTotal"
+        app:layout_constraintBottom_toBottomOf="@id/lessensTotal" />
+
+    <TextView
+        android:id="@+id/lessensTotal"
+        android:layout_width="0dp"
+        android:layout_height="14dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="6dp"
+        android:text="/24 уроков"
+        android:textColor="@color/white"
+        android:alpha="0.5"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/progressStart" />
+
+    <View
+        android:id="@+id/progressStart"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:background="@drawable/corner_shape"
+        android:backgroundTint="@color/green"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/progressEnd"
+        />
+
+    <View
+        android:id="@+id/progressEnd"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:background="@drawable/corner_shape"
+        android:backgroundTint="@color/lightGray"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/progressStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
