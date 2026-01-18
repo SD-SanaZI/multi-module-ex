@@ -36,8 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:list:presentation"))
-    implementation(project(":feature:list:domain"))
+    implementation(project(":feature:account:domain"))
     implementation(project(":core:common_UI"))
     implementation(project(":core:dependencies"))
 

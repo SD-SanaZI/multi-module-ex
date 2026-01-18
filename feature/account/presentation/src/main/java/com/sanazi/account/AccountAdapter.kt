@@ -123,7 +123,7 @@ class AccountAdapter(
 
     @DrawableRes
     private fun favoriteDrawable(hasLike: Boolean): Int {
-        return if (hasLike) com.sanazi.list.presentation.R.drawable.fill_favorite_icon else com.sanazi.common_ui.R.drawable.favorite_icon
+        return if (hasLike) R.drawable.fill_favorite_icon else com.sanazi.common_ui.R.drawable.favorite_icon
     }
 
     override fun getItemCount() = manager.dataSet.size + 2

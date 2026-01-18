@@ -15,6 +15,11 @@
       <module name="Em.core.network.test" options="-proc:none" />
       <module name="Em.data.main" options="-proc:none" />
       <module name="Em.data.test" options="-proc:none" />
+      <module name="Em.feature.account.data.main" options="-proc:none" />
+      <module name="Em.feature.account.data.test" options="-proc:none" />
+      <module name="Em.feature.account.domain" options="-proc:none" />
+      <module name="Em.feature.account.domain.main" options="-proc:none" />
+      <module name="Em.feature.account.domain.test" options="-proc:none" />
       <module name="Em.feature.list.domain" options="-proc:none" />
       <module name="Em.feature.list.domain.main" options="-proc:none" />
       <module name="Em.feature.list.domain.test" options="-proc:none" />

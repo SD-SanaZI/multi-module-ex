@@ -5,9 +5,6 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.sanazi.list.domain.GetAllCoursesUseCase
-import com.sanazi.list.domain.ListCourse
-import com.sanazi.list.domain.SetFavoriteUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -31,12 +28,12 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    suspend fun update(listFilter: (List<ListCourse>) -> List<ListCourse>) {
+    suspend fun update() {
         withContext(Dispatchers.IO) {
             dataSet.let {
                 it.clear()
                 it.addAll(
-                    listFilter(getAllCoursesUseCase())
+                    getAllCoursesUseCase()
                         .map { course ->
                             AccountCourse(
                                 course.id,

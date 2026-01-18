@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    id("kotlin-kapt")
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -12,7 +13,6 @@ kotlin {
     }
 }
 dependencies{
-    implementation(project(":feature:login:domain"))
-    implementation(project(":feature:list:domain"))
-    implementation(project(":feature:account:domain"))
+    implementation ("com.google.dagger:dagger:2.22")
+    kapt ("com.google.dagger:dagger-compiler:2.22")
 }

@@ -12,9 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sanazi.common_ui.getAppDependenciesProvider
-import com.sanazi.list.domain.GetAllCoursesUseCase
-import com.sanazi.list.domain.ListCourse
-import com.sanazi.list.domain.SetFavoriteUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -73,22 +70,9 @@ class AccountFragment : Fragment(R.layout.account) {
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = customAdapter
         lifecycleScope.launch {
-            viewModel.update { listFilter(it) }
+            viewModel.update()
             customAdapter.notifyDataSetChanged()
         }
     }
-
-    fun listFilter(cours: List<ListCourse>): List<ListCourse> {
-        return cours
-    }
 }
 
-data class AccountCourse(
-    val id: Int,
-    val title: String,
-    val rate: String,
-    val startDate: String,
-    val hasLike: Boolean,
-    val doneLessons: Int = 10,
-    val totalLessons: Int = 52
-)

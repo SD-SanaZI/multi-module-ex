@@ -1,17 +1,20 @@
 package com.sanazi.em.app
 
 import android.content.Context
-import com.sanazi.list.data.InputCheckerComponent
+import com.sanazi.account.AccountDataComponent
+import com.sanazi.dependencies.AccountCoursesManagerProvider
 import com.sanazi.dependencies.AppDependenciesProvider
-import com.sanazi.dependencies.InputCheckerProvider
 import com.sanazi.dependencies.CoursesManagerProvider
+import com.sanazi.dependencies.InputCheckerProvider
+import com.sanazi.list.data.InputCheckerComponent
 import com.sanazi.list.data.di.DataComponent
 import dagger.Component
 
 @Component(
     dependencies = [
         CoursesManagerProvider::class,
-        InputCheckerProvider::class
+        InputCheckerProvider::class,
+        AccountCoursesManagerProvider::class
     ]
 )
 interface ApplicationComponent: AppDependenciesProvider {
@@ -20,8 +23,9 @@ interface ApplicationComponent: AppDependenciesProvider {
         fun create(context: Context): ApplicationComponent{
             val coursesManagerProvider = DataComponent.create(context)
             val inputCheckerProvider = InputCheckerComponent.create()
+            val accountComponent = AccountDataComponent.create(context)
             return DaggerApplicationComponent.factory().create(
-                coursesManagerProvider, inputCheckerProvider
+                coursesManagerProvider, inputCheckerProvider, accountComponent
             )
         }
     }
@@ -30,7 +34,8 @@ interface ApplicationComponent: AppDependenciesProvider {
     interface Factory {
         fun create(
             coursesManagerProvider: CoursesManagerProvider,
-            inputCheckerProvider: InputCheckerProvider
+            inputCheckerProvider: InputCheckerProvider,
+            accountCoursesManagerProvider: AccountCoursesManagerProvider
         ): ApplicationComponent
     }
 }
