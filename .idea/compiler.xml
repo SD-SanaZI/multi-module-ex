@@ -10,6 +10,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Em.core.network" options="-proc:none" />
+      <module name="Em.core.network.main" options="-proc:none" />
+      <module name="Em.core.network.test" options="-proc:none" />
       <module name="Em.data.main" options="-proc:none" />
       <module name="Em.data.test" options="-proc:none" />
       <module name="Em.feature.list.domain" options="-proc:none" />

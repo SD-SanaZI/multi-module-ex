@@ -1,4 +1,4 @@
-package com.sanazi.favorite
+package com.sanazi.list.presentation
 
 import android.os.Bundle
 import android.view.View
@@ -7,20 +7,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sanazi.account.ListComponent
 import com.sanazi.common_ui.getAppDependenciesProvider
-import com.sanazi.dependencies.CoursesManagerProvider
 import com.sanazi.em.presentation.bar.ListViewModel
 import com.sanazi.list.domain.GetAllCoursesUseCase
 import com.sanazi.list.domain.GetReverseSortedCoursesUseCase
 import com.sanazi.list.domain.GetSortedCoursesUseCase
 import com.sanazi.list.domain.ListCourse
 import com.sanazi.list.domain.SetFavoriteUseCase
-import com.sanazi.list.presentation.CustomAdapter
-import dagger.Component
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FavoriteFragment : Fragment(R.layout.favorite_layout){
+abstract class ListFragment : Fragment(R.layout.main) {
     private lateinit var viewModel: ListViewModel
 
     @Inject lateinit var getAllCoursesUseCase: GetAllCoursesUseCase
@@ -30,14 +28,15 @@ class FavoriteFragment : Fragment(R.layout.favorite_layout){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FavoriteComponent.create(getAppDependenciesProvider()).inject(this)
+        ListComponent.create(getAppDependenciesProvider()).inject(this)
         viewModel = ViewModelProvider(
             this,
             ListViewModel.provideFactory(
                 getAllCoursesUseCase,
                 getSortedCoursesUseCase,
                 getReverseSortedCoursesUseCase,
-                setFavoriteUseCase, this)
+                setFavoriteUseCase,
+                this)
         )[ListViewModel::class.java]
         val customAdapter = CustomAdapter(viewModel)
         val recyclerView: RecyclerView = view.findViewById(R.id.offerList)
@@ -47,29 +46,14 @@ class FavoriteFragment : Fragment(R.layout.favorite_layout){
             viewModel.update { listFilter(it) }
             customAdapter.notifyItemRangeInserted(0, viewModel.dataSet.size)
         }
-    }
-
-    fun listFilter(cours: List<ListCourse>): List<ListCourse>{
-        return cours.filter { it.hasLike }
-    }
-}
-
-@Component(
-    dependencies = [CoursesManagerProvider::class]
-)
-interface FavoriteComponent{
-    fun inject(favoriteFragment: FavoriteFragment)
-
-    companion object{
-        fun create(coursesManagerProvider: CoursesManagerProvider): FavoriteComponent{
-            return DaggerFavoriteComponent.factory().create(coursesManagerProvider)
+        view.findViewById<View>(R.id.sort_container).setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.sort { listFilter(it) }
+                customAdapter.notifyItemRangeChanged(0, viewModel.dataSet.size)
+            }
         }
     }
 
-    @Component.Factory
-    interface Factory {
-        fun create(
-            coursesManagerProvider: CoursesManagerProvider
-        ): FavoriteComponent
-    }
+    abstract fun listFilter(cours: List<ListCourse>): List<ListCourse>
 }
+

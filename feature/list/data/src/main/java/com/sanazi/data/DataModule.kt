@@ -1,25 +1,18 @@
 package com.sanazi.list.data
 
-import android.content.Context
-import com.sanazi.list.data.database.DatabaseBuilder
-import com.sanazi.list.data.database.LikeRoomDatabase
-import com.sanazi.list.data.database.UserLocalDataSource
-import com.sanazi.list.data.database.UserLocalDataSourceImpl
-import com.sanazi.list.data.net.UserRemoteDataSource
-import com.sanazi.list.data.net.UserRemoteDataSourceImpl
+import com.sanazi.favoritedb.LikeRoomDatabaseModule
+import com.sanazi.favoritedb.UserLocalDataSource
+import com.sanazi.favoritedb.UserLocalDataSourceImpl
 import com.sanazi.list.domain.CoursesRepository
+import com.sanazi.network.UserRemoteDataSource
+import com.sanazi.network.UserRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module(
-    includes = [DataModule.Inner::class]
+    includes = [DataModule.Inner::class, LikeRoomDatabaseModule::class]
 )
 class DataModule{
-    @Provides
-    fun provideDb(context: Context): LikeRoomDatabase =
-        DatabaseBuilder.getInstance(context)
-
     @Module
     interface Inner{
         @Binds

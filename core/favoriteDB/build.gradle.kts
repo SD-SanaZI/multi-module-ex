@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.sanazi.menu.presentation"
+    namespace = "com.sanazi.favoritedb"
     compileSdk {
         version = release(36)
     }
@@ -35,17 +37,15 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common_UI"))
-    implementation(project(":feature:account:presentation"))
-    implementation(project(":feature:main"))
-    implementation(project(":feature:favorite"))
-    implementation(project(":feature:settings:presentation"))
-    implementation(project(":feature:support:presentation"))
+    implementation ("com.google.dagger:dagger:2.22")
+    kapt ("com.google.dagger:dagger-compiler:2.22")
 
+    implementation("androidx.room:room-runtime:2.8.1")
+    ksp("androidx.room:room-compiler:2.8.1")
+    implementation("androidx.room:room-ktx:2.8.1")
 
-    implementation("androidx.fragment:fragment-ktx:1.8.9")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

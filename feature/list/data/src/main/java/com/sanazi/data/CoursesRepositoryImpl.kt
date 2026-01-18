@@ -1,10 +1,11 @@
 package com.sanazi.list.data
 
-import com.sanazi.list.data.database.LikeState
-import com.sanazi.list.data.database.UserLocalDataSource
-import com.sanazi.list.data.net.UserRemoteDataSource
+import com.sanazi.data.ListCourseMapper
+import com.sanazi.favoritedb.LikeState
+import com.sanazi.favoritedb.UserLocalDataSource
 import com.sanazi.list.domain.CoursesRepository
-import com.sanazi.list.domain.Course
+import com.sanazi.list.domain.ListCourse
+import com.sanazi.network.UserRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -13,7 +14,7 @@ class CoursesRepositoryImpl @Inject constructor(
     private val localDataSource: UserLocalDataSource,
     private val remoteDataSource: UserRemoteDataSource
 ) : CoursesRepository {
-    override suspend fun getAllCourses(): List<Course> {
+    override suspend fun getAllCourses(): List<ListCourse> {
         return withContext(Dispatchers.IO) {
             val netCourses = remoteDataSource.getCourses()
             val newCourses = netCourses.map { course ->
@@ -23,7 +24,9 @@ class CoursesRepositoryImpl @Inject constructor(
                         ?.hasLike ?: course.hasLike
                 )
             }
-            return@withContext newCourses
+            return@withContext newCourses.map { course ->
+                ListCourseMapper.mapFromCourse(course)
+            }
         }
     }
 
