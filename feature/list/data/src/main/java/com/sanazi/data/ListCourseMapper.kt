@@ -2,6 +2,8 @@ package com.sanazi.data
 
 import com.sanazi.list.domain.ListCourse
 import com.sanazi.network.Course
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 object ListCourseMapper{
     fun mapToCourse(listCourse: ListCourse): Course {
@@ -24,9 +26,20 @@ object ListCourseMapper{
             course.text,
             course.price,
             course.rate,
-            course.startDate,
+            formatDate(course.startDate),
             course.hasLike,
             course.publishDate
         )
+    }
+
+    private fun formatDate(dateString: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+            outputFormat.format(date ?: return dateString)
+        } catch (e: Exception) {
+            dateString
+        }
     }
 }

@@ -10,7 +10,6 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AccountViewModel @Inject constructor(
-    private val getAllCoursesUseCase: GetAllCoursesUseCase,
     private val setFavoriteUseCase: SetFavoriteUseCase
 ) : ViewModel(), CoursesAdapterManager {
     override val dataSet: MutableList<AccountCourse> = mutableListOf()
@@ -19,38 +18,19 @@ class AccountViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             setFavoriteUseCase(dataSet[position].id, !dataSet[position].hasLike)
         }
-
-        val index = dataSet.indexOfFirst { it.id == dataSet[position].id }
-        if (index != -1) {
-            val course = dataSet[index]
-            dataSet.removeAt(index)
-            dataSet.add(index, course.copy(hasLike = !course.hasLike))
-        }
     }
 
-    suspend fun update() {
-        withContext(Dispatchers.IO) {
-            dataSet.let {
-                it.clear()
-                it.addAll(
-                    getAllCoursesUseCase()
-                        .map { course ->
-                            AccountCourse(
-                                course.id,
-                                course.title,
-                                course.rate,
-                                course.startDate,
-                                course.hasLike
-                            )
-                        }
-                )
-            }
+    fun setData(list: List<AccountCourse>){
+        dataSet.let { set->
+            set.clear()
+            set.addAll(
+                list
+            )
         }
     }
 
     companion object {
         fun provideFactory(
-            getAllCoursesUseCase: GetAllCoursesUseCase,
             setFavoriteUseCase: SetFavoriteUseCase,
             owner: SavedStateRegistryOwner,
             defaultArgs: Bundle? = null,
@@ -63,7 +43,6 @@ class AccountViewModel @Inject constructor(
                     handle: SavedStateHandle
                 ): T {
                     return AccountViewModel(
-                        getAllCoursesUseCase,
                         setFavoriteUseCase
                     ) as T
                 }

@@ -5,20 +5,15 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.sanazi.list.domain.GetAllCoursesUseCase
-import com.sanazi.list.domain.GetReverseSortedCoursesUseCase
-import com.sanazi.list.domain.GetSortedCoursesUseCase
 import com.sanazi.list.domain.ListCourse
 import com.sanazi.list.domain.SetFavoriteUseCase
 import com.sanazi.list.presentation.CustomAdapterManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ListViewModel @Inject constructor(
-    private val getAllCoursesUseCase: GetAllCoursesUseCase,
-    private val getSortedCoursesUseCase: GetSortedCoursesUseCase,
-    private val getReverseSortedCoursesUseCase: GetReverseSortedCoursesUseCase,
     private val setFavoriteUseCase: SetFavoriteUseCase
 ) : ViewModel(), CustomAdapterManager {
     override val dataSet: MutableList<ListCourse> = mutableListOf()
@@ -27,45 +22,28 @@ class ListViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             setFavoriteUseCase(dataSet[position].id, !dataSet[position].hasLike)
         }
+    }
 
-        val index = dataSet.indexOfFirst { it.id == dataSet[position].id }
-        if (index != -1) {
-            val course = dataSet[index]
-            dataSet.removeAt(index)
-            dataSet.add(index, course.copy(hasLike = !course.hasLike))
+    val isAscending: MutableStateFlow<SortState> = MutableStateFlow(SortState.Standard)
+
+    fun setData(list: List<ListCourse>){
+        dataSet.let { set->
+            set.clear()
+            set.addAll(
+                list
+            )
         }
     }
 
-    private var isAscending = false
-
-    suspend fun update(listFilter: (List<ListCourse>) -> List<ListCourse>) {
-        withContext(Dispatchers.IO) {
-            dataSet.clear()
-            dataSet.addAll(listFilter(getAllCoursesUseCase()))
-        }
-    }
-
-    suspend fun sort(listFilter: (List<ListCourse>) -> List<ListCourse>) {
-        withContext(Dispatchers.IO) {
-            dataSet.let {
-                it.clear()
-                it.addAll(
-                    listFilter(
-                        if (isAscending) getReverseSortedCoursesUseCase()
-                        else getSortedCoursesUseCase()
-                    )
-                )
-            }
-            isAscending = !isAscending
+    fun sort() {
+        isAscending.value = when(isAscending.value){
+            SortState.Sort -> SortState.Reverse
+            else -> SortState.Sort
         }
     }
 
     companion object {
         fun provideFactory(
-//            repo: CoursesManager,
-            getAllCoursesUseCase: GetAllCoursesUseCase,
-            getSortedCoursesUseCase: GetSortedCoursesUseCase,
-            getReverseSortedCoursesUseCase: GetReverseSortedCoursesUseCase,
             setFavoriteUseCase: SetFavoriteUseCase,
             owner: SavedStateRegistryOwner,
             defaultArgs: Bundle? = null,
@@ -78,12 +56,13 @@ class ListViewModel @Inject constructor(
                     handle: SavedStateHandle
                 ): T {
                     return ListViewModel(
-                        getAllCoursesUseCase,
-                        getSortedCoursesUseCase,
-                        getReverseSortedCoursesUseCase,
                         setFavoriteUseCase,
                     ) as T
                 }
             }
     }
+}
+
+enum class SortState{
+    Standard, Sort, Reverse
 }

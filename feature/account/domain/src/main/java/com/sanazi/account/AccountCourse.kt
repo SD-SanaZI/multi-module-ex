@@ -1,5 +1,6 @@
 package com.sanazi.account
 
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 data class AccountCourse(
@@ -13,14 +14,14 @@ data class AccountCourse(
 )
 
 interface AccountCoursesRepository{
-    suspend fun getAllCourses(): List<AccountCourse>
+    suspend fun getAllCourses(): Flow<List<AccountCourse>>
     suspend fun setFavorite(id: Int, hasLike: Boolean)
 }
 
 class GetAllCoursesUseCase @Inject constructor(
     private val repository: AccountCoursesRepository
 ) {
-    suspend operator fun invoke(): List<AccountCourse> {
+    suspend operator fun invoke(): Flow<List<AccountCourse>> {
         return repository.getAllCourses()
     }
 }

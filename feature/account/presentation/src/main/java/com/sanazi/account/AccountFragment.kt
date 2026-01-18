@@ -28,7 +28,6 @@ class AccountFragment : Fragment(R.layout.account) {
         viewModel = ViewModelProvider(
             this,
             AccountViewModel.provideFactory(
-                getAllCoursesUseCase,
                 setFavoriteUseCase,
                 this)
         )[AccountViewModel::class.java]
@@ -70,8 +69,11 @@ class AccountFragment : Fragment(R.layout.account) {
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = customAdapter
         lifecycleScope.launch {
-            viewModel.update()
-            customAdapter.notifyDataSetChanged()
+            getAllCoursesUseCase()
+                .collect {
+                    viewModel.setData(it)
+                    customAdapter.notifyDataSetChanged()
+                }
         }
     }
 }

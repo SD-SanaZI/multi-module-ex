@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sanazi.common_ui.getAppDependenciesProvider
 import com.sanazi.dependencies.CoursesManagerProvider
 import com.sanazi.em.presentation.bar.ListViewModel
+import com.sanazi.em.presentation.bar.SortState
 import com.sanazi.list.domain.GetAllCoursesUseCase
-import com.sanazi.list.domain.GetReverseSortedCoursesUseCase
-import com.sanazi.list.domain.GetSortedCoursesUseCase
 import com.sanazi.list.domain.ListCourse
 import com.sanazi.list.domain.SetFavoriteUseCase
 import com.sanazi.list.presentation.CustomAdapter
 import dagger.Component
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +24,6 @@ class FavoriteFragment : Fragment(R.layout.favorite_layout){
     private lateinit var viewModel: ListViewModel
 
     @Inject lateinit var getAllCoursesUseCase: GetAllCoursesUseCase
-    @Inject lateinit var getSortedCoursesUseCase: GetSortedCoursesUseCase
-    @Inject lateinit var getReverseSortedCoursesUseCase: GetReverseSortedCoursesUseCase
     @Inject lateinit var setFavoriteUseCase: SetFavoriteUseCase
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,9 +32,6 @@ class FavoriteFragment : Fragment(R.layout.favorite_layout){
         viewModel = ViewModelProvider(
             this,
             ListViewModel.provideFactory(
-                getAllCoursesUseCase,
-                getSortedCoursesUseCase,
-                getReverseSortedCoursesUseCase,
                 setFavoriteUseCase, this)
         )[ListViewModel::class.java]
         val customAdapter = CustomAdapter(viewModel)
@@ -44,8 +39,14 @@ class FavoriteFragment : Fragment(R.layout.favorite_layout){
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = customAdapter
         lifecycleScope.launch {
-            viewModel.update { listFilter(it) }
-            customAdapter.notifyItemRangeInserted(0, viewModel.dataSet.size)
+            getAllCoursesUseCase()
+                .combine(viewModel.isAscending){list, state -> list}
+                .collect {
+                    if (viewModel.isAscending.value == SortState.Standard) {
+                        viewModel.setData(listFilter(it))
+                        customAdapter.notifyDataSetChanged()
+                    }
+                }
         }
     }
 
