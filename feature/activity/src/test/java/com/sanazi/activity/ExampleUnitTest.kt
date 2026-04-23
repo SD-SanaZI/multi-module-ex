@@ -1,4 +1,4 @@
-package com.sanazi.nevigation
+package com.sanazi.activity
 
 import org.junit.Test
 

@@ -49,7 +49,7 @@ dependencies {
     implementation(project(":feature:account:data"))
     implementation(project(":feature:login:domain"))
     implementation(project(":feature:login:data"))
-    implementation(project(":core:navigation"))
+    implementation(project(":feature:activity"))
 
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")

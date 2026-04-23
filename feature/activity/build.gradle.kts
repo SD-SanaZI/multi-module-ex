@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sanazi.nevigation"
+    namespace = "com.sanazi.activity"
     compileSdk {
         version = release(36)
     }
@@ -35,6 +35,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:login:presentation"))
+    implementation(project(":feature:pageWithBar:presentation"))
+    
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
