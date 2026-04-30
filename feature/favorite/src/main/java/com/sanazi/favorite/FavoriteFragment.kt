@@ -15,9 +15,12 @@ import com.sanazi.list.domain.GetAllCoursesUseCase
 import com.sanazi.list.domain.ListCourse
 import com.sanazi.list.domain.SetFavoriteUseCase
 import com.sanazi.list.presentation.CustomAdapter
+import com.sanazi.list.presentation.CustomAdapterManager
 import dagger.Component
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FavoriteFragment : Fragment(R.layout.favorite_layout){
@@ -29,12 +32,19 @@ class FavoriteFragment : Fragment(R.layout.favorite_layout){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FavoriteComponent.create(getAppDependenciesProvider()).inject(this)
-        viewModel = ViewModelProvider(
-            this,
-            ListViewModel.provideFactory(
-                setFavoriteUseCase, this)
-        )[ListViewModel::class.java]
-        val customAdapter = CustomAdapter(viewModel)
+        viewModel = ViewModelProvider(this)[ListViewModel::class.java]
+        val customAdapter = CustomAdapter(
+            object : CustomAdapterManager{
+                override val dataSet: List<ListCourse>
+                    get() = viewModel.dataSet
+
+                override suspend fun onFavoriteClick(position: Int) {
+                    withContext(Dispatchers.IO) {
+                        setFavoriteUseCase(dataSet[position].id, !dataSet[position].hasLike)
+                    }
+                }
+            }
+        )
         val recyclerView: RecyclerView = view.findViewById(R.id.offerList)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = customAdapter
